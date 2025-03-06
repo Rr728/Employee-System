@@ -1,0 +1,173 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - WebApplication2</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/WebApplication2.styles.css" asp-append-version="true" />
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="bg-violate position-sticky text-white py-3 text-center">
+        <h2>
+            <img src="~/Image/logo2.png" alt="Company Logo" style="width: 80px;border-radius: 50%; margin-right: 15px;vertical-align: middle;" />Employee Management System
+        </h2>
+    </header>
+
+    <!-- Horizontal Menu with Dropdowns -->
+    <nav class="bg-purple text-white py-2">
+        <div class="container d-flex justify-content-between align-items-center">
+
+            <!-- Menu Items -->
+            <ul class="nav nav-pills flex-row">
+                <li class="nav-item mx-3">
+                    <a asp-controller="Home" asp-action="Index" class="nav-link text-white"><b>Home</b></a>
+                </li>
+
+                <!-- Employees Dropdown -->
+                <li class="nav-item dropdown mx-3">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="employeesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                       <b> Employees</b>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="employeesDropdown">
+                        <li><a asp-controller="Employee" asp-action="Add" class="dropdown-item">Add Employee</a></li>
+                        <li><a asp-controller="Employee" asp-action="Index" class="dropdown-item">List Employees</a></li>
+                    </ul>
+                </li>
+
+                <!-- Departments Dropdown -->
+                <li class="nav-item dropdown mx-3">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="departmentsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <b>Departments</b>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="departmentsDropdown">
+                        <li><a asp-controller="Department" asp-action="Add" class="dropdown-item">Add Department</a></li>
+                        <li><a asp-controller="Department" asp-action="Index" class="dropdown-item">List Departments</a></li>
+                    </ul>
+                </li>
+
+                <!-- Attendance Dropdown -->
+                <li class="nav-item dropdown mx-3">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="attendanceDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <b>Attendance</b>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="attendanceDropdown">
+                        <li><a asp-controller="Attendance" asp-action="Add" class="dropdown-item">Mark Attendance</a></li>
+                        <li><a asp-controller="Attendance" asp-action="Index" class="dropdown-item">View Attendance</a></li>
+                    </ul>
+                </li>
+
+                <!-- Leave Dropdown -->
+                <li class="nav-item dropdown mx-3">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="leaveDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <b>Leave</b>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="leaveDropdown">
+                        <li><a asp-controller="Leave" asp-action="Apply" class="dropdown-item">Apply for Leave</a></li>
+                        <li><a asp-controller="Leave" asp-action="Status" class="dropdown-item">Check Leave Status</a></li>
+                    </ul>
+                </li>
+
+
+                <li class="nav-item">
+                    <!-- Form with action to submit to login page -->
+                    <form method="post" action="@Url.Action("Login", "Home")" id="logout-form">
+                        <button type="button" id="logout-button" class="btn btn-violet" style="display: none; position:absolute;  right:20px; " onclick="logout()">Logout</button>
+                    </form>
+                </li>
+
+            </ul>
+         
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container-fluid">
+        <div class="row flex-nowrap">
+            <div class="col py-3">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-top footer text-muted center">
+        <div class="container">
+            &copy; 2025 - WebApplication2 -<a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    <script>
+                   document.addEventListener("DOMContentLoaded", function () {
+            // Check session storage
+            const isLoggedIn = sessionStorage.getItem("isLoggedIn") === "true";
+
+            // Debugging
+            console.log("Debug: isLoggedIn Value ->", sessionStorage.getItem("isLoggedIn"));
+
+            // Get logout button
+            const logoutButton = document.getElementById("logout-button");
+
+            if (logoutButton) {
+                if (isLoggedIn) {
+                    console.log(" User is logged in - Showing logout button");
+                    logoutButton.style.display = "block";
+                } else {
+                    console.log(" User is NOT logged in - Hiding logout button");
+                    logoutButton.style.display = "none";
+                }
+            }
+        });
+
+        function logout() {
+            // Clear session storage
+            sessionStorage.removeItem("isLoggedIn");
+            sessionStorage.removeItem("userEmail");
+
+            // Show the logout alert
+            alert("You have been logged out from EMS system. For Accessing  EMS System again, please login here.");
+
+            // Redirect to login page after alert is acknowledged
+            setTimeout(function () {
+                // Manually submit the form to redirect to the login page
+                document.getElementById('logout-form').submit();
+            }, 100); // Small delay to ensure alert is shown before redirect
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            // Get the current page path
+            const currentPath = window.location.pathname.toLowerCase();
+
+            // Define pages that do NOT require authentication
+            const allowedPages = ["/home/login", "/", "/home/welcome"]; // Customize as needed
+
+            // Retrieve the logged-in state from sessionStorage
+            const isLoggedIn = sessionStorage.getItem("isLoggedIn") === "true";  // Ensure it's a boolean
+
+            // If the user is NOT logged in and trying to access a protected page, redirect to login
+            if (!isLoggedIn && !allowedPages.includes(currentPath)) {
+                document.body.style.display = "none";
+                alert("For accessing this page, please login first.");
+                window.location.href = "/Home/Login"; // Redirect to login page
+            }
+
+            // If user IS logged in and tries to access the login page, redirect them to welcome/dashboard
+            else if (isLoggedIn && allowedPages.includes(currentPath)) {
+                //window.location.href = "/Home/Welcome"; // Redirect to welcome page or dashboard
+            }
+        });
+
+    </script>
+
+
+
+</body>
+</html>

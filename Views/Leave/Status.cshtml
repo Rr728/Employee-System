@@ -1,0 +1,32 @@
+﻿@model List<WebApplication2.Models.LeaveRequest>
+
+<h2>My Leave Requests</h2>
+
+@if (Model == null || !Model.Any())
+{
+    <p class="alert alert-warning">No leave records found.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var leave in Model)
+            {
+                <tr>
+                    <td>@leave.LeaveType</td>
+                    <td>@leave.StartDate.ToShortDateString()</td>
+                    <td>@leave.EndDate.ToShortDateString()</td>
+                    <td>@(string.IsNullOrEmpty(leave.Status) ? "Not Set" : leave.Status)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

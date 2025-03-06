@@ -1,0 +1,9 @@
+﻿@model List<WebApplication2.Models.Attendance>
+
+<form method="post" asp-action="MarkAttendance">
+    <label>Employee ID:</label>
+    <input type="number" name="employeeId" required />
+    <label>Present:</label>
+    <input type="checkbox" name="isPresent" value="true" />
+    <button type="submit">Submit</button>
+</form>

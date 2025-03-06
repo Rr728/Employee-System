@@ -1,0 +1,39 @@
+﻿@model WebApplication2.Models.LeaveRequest
+@{
+    ViewData["Title"] = "Apply for Leave";
+}
+<style>
+    .btn-violet {
+        background-color: darkviolet;
+        color: white;
+    }
+
+    .btn-purple {
+        background-color: #c07ae9;
+        color: white;
+    }
+</style>
+<h2>Apply for Leave</h2>
+<form asp-action="Apply" method="post">
+    <div class="form-group">
+        <label asp-for="LeaveType">Leave Type</label>
+        <select asp-for="LeaveType" class="form-control">
+            <option value="Sick Leave">Sick Leave</option>
+            <option value="Casual Leave">Casual Leave</option>
+            <option value="Vacation Leave">Vacation Leave</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label asp-for="StartDate">Start Date</label>
+        <input asp-for="StartDate" type="date" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="EndDate">End Date</label>
+        <input asp-for="EndDate" type="date" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Reason">Reason</label>
+        <textarea asp-for="Reason" class="form-control"></textarea>
+    </div>
+    <button type="submit" class="btn btn-violet">Submit</button>
+</form>

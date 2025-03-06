@@ -1,0 +1,82 @@
+﻿@model List<WebApplication2.Models.Employee>
+
+<head>
+    <link href="~/css/list.css" rel="stylesheet" media="all" />
+</head>
+<h1 style="color:#000000; margin-top:25px">Employee List</h1>
+<div class="table-responsive-xs">
+    <table class="table table-hover table-xs" id="tbl-list">
+        <thead>
+            <tr>
+                <th>
+                    EmployeeId
+                </th>
+                <th>
+                    FirstName
+                </th>
+                <th>
+                    LastName
+                </th>
+                <th>
+                    DateOfBirth
+                </th>
+                <th>
+                    Gender
+                </th>
+                <th>
+                    Email
+                </th>
+                <th>
+                    PhoneNumber
+                </th>
+                <th>
+                    Address
+                </th>
+                <th>
+                    IsActive
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var Employee in Model)
+            {
+                <tr>
+                    <td>
+                        @Employee.EmployeeId
+                    </td>
+                    <td>
+                        @Employee.FirstName
+                    </td>
+                    <td>
+                        @Employee.LastName
+                    </td>
+                    <td>
+                        @Employee.DateOfBirth
+                    </td>
+                    <td>
+                        @Employee.Gender
+                    </td>
+                    <td>
+                        @Employee.Email
+                    </td>
+                    <td>
+                        @Employee.PhoneNumber
+                    </td>
+                    <td>
+                        @Employee.Address
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-controller="Employee" asp-route-id="@Employee.EmployeeId" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i>Edit</a> |
+                        <a asp-action="Delete" asp-route-id="@Employee.EmployeeId" class="btn btn-danger btn-sm"><i class="fa fa-trash">Delete</i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <!-- paging control for navigation to the previous page, next page, etc -->
+</div>
+
+
+
+
+

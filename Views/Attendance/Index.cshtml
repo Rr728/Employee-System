@@ -1,0 +1,19 @@
+﻿@model List<WebApplication2.Models.Attendance>
+<h2>Employee Attendance</h2>
+<table class="table">
+    <tr>
+        <th>Employee ID</th>
+        <th>Date</th>
+        <th>Present</th>
+    </tr>
+    @foreach (var record in Model)
+    {
+        <tr>
+            <td>@record.EmployeeId</td>
+            <td>@record.Date.ToShortDateString()</td>
+            <td>@(record.IsPresent ? "Yes" : "No")</td>
+        </tr>
+    }
+</table>
+
+

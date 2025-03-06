@@ -1,0 +1,43 @@
+﻿@model List<WebApplication2.Models.Department>
+
+<head>
+    <link href="~/css/list.css" rel="stylesheet" media="all" />
+</head>
+<h1 style="color:#000000; margin-top:25px">Department List</h1>
+<div class="table-responsive-xs">
+    <table class="table table-hover table-xs" id="tbl-list">
+        <thead>
+            <tr>
+                <th>
+                    DepartmentId
+                </th>
+                <th>
+                    Name
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var Department in Model)
+            {
+                <tr>
+                    <td>
+                        @Department.DepartmentId
+                    </td>
+                    <td>
+                        @Department.Name
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-controller="Department" asp-route-id="@Department.DepartmentId" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i>Edit</a> |
+                        <a asp-action="Delete" asp-route-id="@Department.DepartmentId" class="btn btn-danger btn-sm"><i class="fa fa-trash">Delete</i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <!-- paging control for navigation to the previous page, next page, etc -->
+</div>
+
+
+
+
+
